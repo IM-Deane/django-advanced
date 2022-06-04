@@ -1,0 +1,6 @@
+*.pyc
+.DS_Store
+.parcel-cache
+dist
+
+client/node_modules
