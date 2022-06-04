@@ -1,6 +1,8 @@
 *.pyc
+**__pycache__**
 .DS_Store
 .parcel-cache
 dist
+db*
 
 client/node_modules
