@@ -1,6 +1,4 @@
-# Running Background Tasks with Celery
-
-## Description
+# Advanced Django Concepts
 
 This project was created while following part 3 of
 [codewithmosh.com's](https://codewithmosh.com/p/the-ultimate-django-series)
