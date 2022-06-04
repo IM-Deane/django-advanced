@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'playground',
+    'rest_framework',
     'debug_toolbar',
 ]
 
@@ -85,11 +86,8 @@ WSGI_APPLICATION = 'storefront.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'storefront3',
-        'HOST': 'localhost',
-        'USER': 'tristandeane',
-        'PASSWORD': 'MasterLock452!'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -151,5 +149,17 @@ CELERY_BEAT_SCHEDULE = {
         'args': ['Hey friendo!']
         # 'schedule': crontab(day_of_week=1, hour=7, minute=30) --> run task every monday at 7:30
         # 'schedule': crontab(minute='*/15') --> run task every 15 minutes
+    }
+}
+
+# Redis
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2", # note database is different from redis msg broker
+        "TIMEOUT": 10 * 60, # 10 minutes
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }
