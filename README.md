@@ -124,3 +124,5 @@ To view all currently cached keys: `keys *`
 To delete a specific key you can run: `del <cache-key>`
 
 To clear the entire cache you can use: `flushall`
+
+To close the Redis CLI: `quit`
