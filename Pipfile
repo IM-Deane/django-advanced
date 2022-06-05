@@ -15,6 +15,7 @@ whitenoise = "*"
 requests = "*"
 gunicorn = "*"
 django-environ = "*"
+django-redis = "*"
 
 [dev-packages]
 autopep8 = "*"
