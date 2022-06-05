@@ -1,13 +1,19 @@
+import logging
+import requests
+
 from django.shortcuts import render
-from .tasks import notify_customers
+
+logger = logging.getLogger(__name__)
 
 
 def say_hello(request):
     """
-    The Celery task is executed when someone navigates
-    to the view.
-
-    NOTE: To run the task you MUST use the delay function!
+    Add logging error handling
     """
-    notify_customers.delay('Hello awesome customer!')
-    return render(request, 'hello.html', {'name': 'Celery'})
+    try:
+        logger.info('Calling httpbin')
+        response = requests.get('https://httpbin.org/delay/2')
+        logger.info('Recieved the response')
+    except requests.ConnectionError:
+        logger.critical('httpbin is offline!')
+    return render(request, 'hello.html', {'name': 'Logger'})

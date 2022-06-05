@@ -10,6 +10,10 @@ pillow = "*"
 redis = "*"
 celery = "*"
 flower = "*"
+psycopg2 = "*"
+whitenoise = "*"
+requests = "*"
+gunicorn = "*"
 
 [dev-packages]
 autopep8 = "*"

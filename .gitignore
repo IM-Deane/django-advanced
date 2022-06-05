@@ -5,4 +5,6 @@
 dist
 db*
 
-client/node_modules
+/static/
+/media./
+general.log
