@@ -45,9 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
+    'django_filters',
+    'corsheaders',
+    'rest_framework',
+    'djoser',
+    'silk',
     'playground',
-    'core'
+    'debug_toolbar',
+    'store',
+    'tags',
+    'likes',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -192,6 +200,8 @@ CELERY_BEAT_SCHEDULE = {
         # 'schedule': crontab(minute='*/15') --> run task every 15 minutes
     }
 }
+
+AUTH_USER_MODEL = 'core.user'
 
 REDIS_URL = env.cache_url('REDIS_URL')
 

@@ -486,20 +486,46 @@ After running this command, Heroku will begin building your project.
 
 Depending on the size of your project, this will take sometime so grab a snack.
 
+You'll know everything went well if there are no errors in the terminal and you
+see something like:
+
+```log
+To https://git.heroku.com/djangotut-prod.git
+   b77b5da..4853f20  master -> master
+```
+
 After your app has finished building, we need to create an admin user:
 
-```
-heroku run python manage.py createsuperuser
-```
+`heroku run python manage.py createsuperuser`
 
 This command opens a bash shell in our Heroku app and then intiates the admin
 creation process.
 
-After creating an admin user, we can open our app with:
+Finally, after creating an admin user, we can open our app with:
 
 `heroku open`
 
 If you've done everything correctly then your application's homepage should
 appear!
 
+Feel free to navigate around your app and see if all of your endpoints are
+correct.
+
 ### Populating the database
+
+Its common practice to seed a new database using a custom Django command.
+
+This allows us to quickly populate our database. We can even migrate data from
+our local database.
+
+You can view a sample seed script in `store/management/commands/seed_db.py`.
+
+This command will use the `store/management/commands/seed.sql` to insert data
+into our database.
+
+You can run the command using:
+
+`heroku run python manage.py seed_db`
+
+Once this is complete, your database is populated and your application is
+officially live!
