@@ -4,6 +4,8 @@
 .parcel-cache
 dist
 db*
+.env
+.env.local
 
 /static/
 /media./

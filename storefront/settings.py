@@ -10,12 +10,31 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
-from pathlib import Path
+import environ
 from celery.schedules import crontab
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
+# Set the project base directory
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env.local'))
+
+# False if not in os.environ because of casting above
+DEBUG = env('DEBUG')
+
+# Raises Django's ImproperlyConfigured
+# exception if SECRET_KEY not in os.environ
+SECRET_KEY = env('SECRET_KEY')
+
+ALLOWED_HOSTS = [
+    'localhost',
+    'djangotut-prod.herokuapp.com'
+]
 
 # Application definition
 
@@ -70,6 +89,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'storefront.wsgi.application'
 
+# Parse database connection url strings
+# like psql://user:pass@127.0.0.1:8458/db
+DATABASES = {
+    # read os.environ['DATABASE_URL'] and raises
+    # ImproperlyConfigured exception if not found
+    #
+    # The db() method is an alias for db_url().
+    'default': env.db(),
+}
+
 
 LOGGING = {
     'version': 1,
@@ -91,7 +120,7 @@ LOGGING = {
         '': {
             'handlers': ['console', 'file'],
             # severity of log messages
-            'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO')
+            'level': env('DJANGO_LOG_LEVEL')
         }
     },
     'formatters': {
@@ -153,9 +182,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# points to mapped redis instance in docker container
-CELERY_BROKER_URL = 'redis://localhost:6379/1'
-
 # create periodic task
 CELERY_BEAT_SCHEDULE = {
     'notify_customers':  {
@@ -164,5 +190,20 @@ CELERY_BEAT_SCHEDULE = {
         'args': ['Hey friendo!']
         # 'schedule': crontab(day_of_week=1, hour=7, minute=30) --> run task every monday at 7:30
         # 'schedule': crontab(minute='*/15') --> run task every 15 minutes
+    }
+}
+
+REDIS_URL = env.cache_url('REDIS_URL')
+
+CELERY_BROKER_URL = REDIS_URL
+
+CACHES = {
+     "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "TIMEOUT": 10 * 60, # 10 minutes
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }

@@ -426,3 +426,62 @@ After updating the settings, you now have a scalable production SMTP server!
 
 Once you've provisioned the necessary add-ons for your project its time to ship
 your application.
+
+With Heroku this process is very simple.
+
+First you need to commit whatever changes you want to deploy:
+
+```git
+git add .
+git commit -m "my updated code"
+```
+
+Now that our changes are ready, we can deploy them by pushing to our project's
+Heroku repository.
+
+You can find that repo using:
+
+```git
+git remote -v
+```
+
+Your terminal should display all remote repositories connected to your project:
+
+```log
+heroku  https://git.heroku.com/djangotut-prod.git (fetch)
+heroku  https://git.heroku.com/djangotut-prod.git (push)
+origin  git@github.com:IM-Deane/django-advanced.git (fetch)
+origin  git@github.com:IM-Deane/django-advanced.git (push)
+```
+
+We can see that Heroku is connected to our project.
+
+By default, Heroku will connect to our project's master/main branch.
+
+If you're not sure which branch your project uses, you can check by running:
+
+```git
+git branch
+```
+
+Which will list all of your project's branches.
+
+Now we can push with Heroku with:
+
+```git
+git push heroku master
+```
+
+or
+
+```git
+git push heroku main
+```
+
+Depending on the branch your project uses.
+
+After running this command, Heroku will begin building your project.
+
+**Note**
+
+Depending on the size of your project, this will take sometime so grab a snack.
