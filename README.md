@@ -485,3 +485,21 @@ After running this command, Heroku will begin building your project.
 **Note**
 
 Depending on the size of your project, this will take sometime so grab a snack.
+
+After your app has finished building, we need to create an admin user:
+
+```
+heroku run python manage.py createsuperuser
+```
+
+This command opens a bash shell in our Heroku app and then intiates the admin
+creation process.
+
+After creating an admin user, we can open our app with:
+
+`heroku open`
+
+If you've done everything correctly then your application's homepage should
+appear!
+
+### Populating the database
